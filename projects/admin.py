@@ -5,4 +5,4 @@ from .models import Project
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'start_date', 'end_date',)
