@@ -19,17 +19,10 @@ class Project(models.Model):
     end_date = models.DateField()
     users = models.ManyToManyField(User)
 
+    # TODO: add validator that prevents end_date from being before start_date
+
     class Meta:
         ordering = ('title', 'start_date',)
-
-    def get_absolute_url(self):
-        """
-        Get url for user's detail view.
-
-        Returns:
-            str: URL for user detail.
-        """
-        return reverse('projects:detail', kwargs={'id': self.id})
 
     def __repr__(self):
         return '[{id}] - {title}'.format(id=self.id, title=self.title)
