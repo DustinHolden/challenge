@@ -2,11 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
-          integrity="sha384-4ZPLezkTZTsojWFhpdFembdzFudphhoOzIunR1wH6g1WQDzCAiPvDyitaK67mp0+" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css-1.5.1.min.css"/>
+
     <title>Challenge</title>
 </head>
 <body>
+<h1>Challenge</h1>
+<p>This is the response to the coding challenge received from Genesis Research.</p>
+<h2>Project Structure</h2>
+<p>
+    You will find that the settings have been broken into four files.
+    <code>common.py</code>,<code>local.py</code>,<code>test.py</code>,<code>production.py</code>.
+</p>
+<p>
+    <code>common.py</code> gives us a base file that is inherited in the other three files.
+    The settings in these files are overridden in each file if needed.
+    <br/>
+    <br/>
+    <code>local.py</code> is a configuration for local development, these settings <b>should not</b> ever
+    be used in a production environment. They will and can expose sensitive information.
+    <br/>
+    <br/>
+    <code>test.py</code> is a configuration for test environments. Much like <code>local.py</code>
+    these files should not be used in production. This file should be referenced when running automated tests.
+    <br/>
+    <br/>
+    <code>production.py</code> is the configuration that should be used when deploying to a production
+    environment. This file is configured to run a Django server behind a load balancer that terminates
+    SSL. These are sane configurations, but should be reviewed before placing in to a production environment.
+</p>
+<h2>Environment Installation</h2>
+<p>
+    This project was built using Python 3.8, but should work on any version that is 3.6+.
+    To run this environment you can follow the below steps.
+</p>
+<ol>
+    <li>Clone from the repository <code>clone https://github.com/DustinHolden/challenge.git</code></li>
+    <li><code>cd</code> into the root directory</li>
+    <li>Create a virtualenv (e.g. <code>python3 -m venv ./venv</code>) using your preferred method</li>
+    <li>Activate your environment, <code>source ./venv/bin/activate</code></li>
+    <li>Install the requirements. <code>pip install -r requirements.txt</code></li>
+    <li>Run database migrations <code>./manage.py migrate</code></li>
+    <li>Run development server <code>./manage.py runserver</code></li>
+</ol>
 
+<h3>Caveats</h3>
+<p>
+    This project was set up to use the Argon2 password hasher. If you encounter any issues
+    installing requirements, you can comment out <code>'django.contrib.auth.hashers.Argon2PasswordHasher'</code>
+    and remove <code>argon2-cffi==20.1.0</code> from the <code>requirements.txt</code> file. Argon2 is the recommended
+    password hasher for Django, but is not included by default.
+</p>
+<p>
+    Django-Environ was used to build most of the settings files. This library is very helpful in
+    setting sane defaults for each configuration. Though, you will note that there are not many defaults set
+    in the <code>production.py</code> because we want to reference these settings from the servers environment.
+    If we do not want to reference them from the servers environment, we can distribute a <code>.env</code> file
+    with these variables set. In most cases we want to keep the <code>.env</code> outside of version control.
+</p>
+
+<h3>Production Recommendations</h3>
+<p>
+    A few items that were left out of the production set up were error logging, performance monitoring, and cloud
+    storage. I recommend using <a href="https://sentry.io">Sentry</a> for error logging,
+    <a href="https://newrelic.com/">New Relic</a> for performance monitoring,
+    and <a href="https://django-storages.readthedocs.io/en/latest/">django-storages</a> for interacting with different
+    cloud providers.
+</p>
+
+<h2>Interacting with the API</h2>
+<p>
+    For your convenience, a registration process was included. You can access it
+    <a href="/rest-auth/registration/">here</a>. Once you <code>POST</code> your
+    response, you will receive a token. This token must be used in the REST API calls. Include
+    this token in the <code>Authorization</code> header with a value in this format
+    <code>Token YOUR_TOKEN_HERE</code>.
+</p>
+<p>
+    You can also browse the API via the Django Rest Framework browsable API by going
+    <a href="/api/">here</a>. You will still need to be logged in to access any information.
+</p>
+<p>
+    The Django admin has also been made available to create, update, or delete any information.
+    You will need to create a user with the appropriate authorization to access the admin.
+    <code>./manage.py createsuperuser</code> is the quickest way to add a superuser. Then you can
+    log into the admin <a href="/admin/">here</a>.
+</p>
 </body>
 </html>
