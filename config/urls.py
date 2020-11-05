@@ -27,7 +27,7 @@ urlpatterns += [
     # API login
     path('api-auth/', include('rest_framework.urls')),
     # API Token and Registration
-    path('auth-token/', obtain_auth_token),
+    path('auth-token/', obtain_auth_token, name='get-auth-token'),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]

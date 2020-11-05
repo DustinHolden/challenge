@@ -20,7 +20,7 @@ class UserViewSet(ModelViewSet):
     search_fields = ['username', 'email', 'name', ]
 
     def get_queryset(self, *args, **kwargs):
-        # restrict viewing of all users to superusers
+        # allow superusers to see all users
         if self.request.user.is_superuser:
             return self.queryset
         # by default only show users themselves, alter this filter to allow users to see others
