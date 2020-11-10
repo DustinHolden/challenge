@@ -18,6 +18,7 @@ class ProjectFactory(DjangoModelFactory):
     def add_users(self, create, extracted, **kwargs):
         # currently, this creates new users
         # TODO: change logic to pull a random number already created users and new users
+        # TODO: check for existing user
         for i in range(1, randrange(0, 10)):
             user = UserFactory()
             self.users.add(user)

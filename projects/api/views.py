@@ -16,6 +16,10 @@ class ProjectViewSet(ModelViewSet):
         'title', 'description', 'status', 'start_date', 'end_date',
         'users__username', 'users__email', 'users__name',
     ]
+
+    # TODO: ability to search on multiple statuses
+    # https://django-filter.readthedocs.io/en/stable/guide/rest_framework.html#additional-filterset-features
+
     search_fields = [
         'title', 'description', 'status', 'start_date', 'end_date',
         'users__username', 'users__email', 'users__name',
